@@ -47,7 +47,9 @@ export function App() {
     }
 
     useEffect(() => setCount(settings.startValue), [settings])
-
+    const applyDisabled = error !== 'enter values and press "set"'
+    const incDisabled = error ? true : isDisabledInc
+    const resDisabled = error ? true : isDisabledReset
     return (
         <div className={s.wrapper}>
             {
@@ -55,15 +57,10 @@ export function App() {
                     ? (
                         <div className={s.stand}>
                             <div className={s.desktop}>
-                                <Settings
-                                    getSettings={getSettings}
-                                    changeValueSettings={changeValueSettings}
-                                />
+                                <Settings getSettings={getSettings} changeValueSettings={changeValueSettings} error={error}/>
                             </div>
                             <div className={s.buttons}>
-                                <Button
-                                    title={'set'} callback={setSettingsCallback}
-                                    disabled={error !== 'enter values and press "set"'}/>
+                                <Button title={'apply'} callback={setSettingsCallback} disabled={applyDisabled}/>
                             </div>
                         </div>
                     )
@@ -73,8 +70,8 @@ export function App() {
                                 <Counter count={error ? error : count} error={isDisabledInc}/>
                             </div>
                             <div className={s.buttons}>
-                                <Button callback={increment} title={'inc'} disabled={error ? true : isDisabledInc}/>
-                                <Button callback={reset} title={'res'} disabled={error ? true : isDisabledReset}/>
+                                <Button title={'inc'} callback={increment} disabled={incDisabled}/>
+                                <Button title={'res'} callback={reset} disabled={resDisabled}/>
                                 <Button title={'set'} callback={showHideSettings} disabled={false}/>
                             </div>
                         </div>

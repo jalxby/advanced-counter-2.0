@@ -5,23 +5,31 @@ import {StorageType} from "../../hooks/useLocalStorage";
 type SettingsType = {
     changeValueSettings: StorageType
     getSettings: (startValue: number, maxValue: number) => void
+    error: string
 }
 
 export const Settings = (props: SettingsType) => {
 
     const dispatchMaxValue = (event: ChangeEvent<HTMLInputElement>) => {
         props.getSettings(props.changeValueSettings.startValue, Number(event.currentTarget.value))
+        console.log(props.error)
     }
 
     const dispatchStartValue = (event: ChangeEvent<HTMLInputElement>) => {
         props.getSettings(Number(event.currentTarget.value), props.changeValueSettings.maxValue)
     }
 
+    const inputClassName = `${props.error !== 'enter values and press "set"' ? s.error : ''}`
+
     return (
         <div className={s.settings}>
-            <div>maxValue:<input value={props.changeValueSettings.maxValue} onChange={dispatchMaxValue}
+            <div>maxValue:<input className={inputClassName}
+                                 value={props.changeValueSettings.maxValue}
+                                 onChange={dispatchMaxValue}
                                  type={'number'}/></div>
-            <div>start value:<input value={props.changeValueSettings.startValue} onChange={dispatchStartValue}
+            <div>start value:<input className={inputClassName}
+                                    value={props.changeValueSettings.startValue}
+                                    onChange={dispatchStartValue}
                                     type={'number'}/>
             </div>
         </div>
