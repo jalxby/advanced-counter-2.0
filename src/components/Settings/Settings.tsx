@@ -19,7 +19,7 @@ export const Settings = (props: SettingsType) => {
         props.getSettings(Number(event.currentTarget.value), props.changeValueSettings.maxValue)
     }
 
-    const inputClassName = `${props.error !== 'enter values and press "set"' ? s.error : ''}`
+    const inputClassName = `${props.error ? s.error : ''}`
 
     return (
         <div className={s.settings}>

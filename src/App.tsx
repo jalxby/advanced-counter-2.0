@@ -32,7 +32,7 @@ export function App() {
         } else if (startValue > maxValue) {
             setError('startValue can\'t be more than maxValue')
         } else {
-            setError('enter values and press "set"')
+            setError('')
         }
     }
 
@@ -47,7 +47,7 @@ export function App() {
     }
 
     useEffect(() => setCount(settings.startValue), [settings])
-    const applyDisabled = error !== 'enter values and press "set"'
+    const applyDisabled = !!error
     const incDisabled = error ? true : isDisabledInc
     const resDisabled = error ? true : isDisabledReset
     return (
@@ -57,7 +57,8 @@ export function App() {
                     ? (
                         <div className={s.stand}>
                             <div className={s.desktop}>
-                                <Settings getSettings={getSettings} changeValueSettings={changeValueSettings} error={error}/>
+                                <Settings getSettings={getSettings} changeValueSettings={changeValueSettings}
+                                          error={error}/>
                             </div>
                             <div className={s.buttons}>
                                 <Button title={'apply'} callback={setSettingsCallback} disabled={applyDisabled}/>

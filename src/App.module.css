@@ -3,12 +3,6 @@
     -webkit-box-sizing: border-box;
 }
 
-/*.container {*/
-/*    max-width: 1200px;*/
-/*    margin: 0 auto;*/
-/*    padding-top: 30px;*/
-/*}*/
-
 .wrapper {
     display: flex;
     flex-direction: row;
@@ -16,6 +10,7 @@
     margin: 0 auto;
     padding-top: 100px;
 }
+
 .stand {
     display: flex;
     flex-direction: column;
@@ -27,6 +22,7 @@
     background-color: #2d2a35;
     border: #61dafb 3px solid;
 }
+
 .desktop {
     display: flex;
     flex-direction: column;

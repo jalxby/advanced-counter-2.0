@@ -14,4 +14,3 @@ export const Counter: FC<DesktopType> = ({count, error}) => {
     );
 };
 
-// ${error ? s.overCount : s.counter} ${typeof count==="string"}?
