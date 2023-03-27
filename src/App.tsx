@@ -3,9 +3,15 @@ import s from './App.module.css';
 import {Button} from './components/Button/Button';
 import {Counter} from './components/Counter/Counter';
 import {Settings} from './components/Settings/Settings';
-import {useLocalStorage} from "./hooks/useLocalStorage";
 import {StateType} from "./Redux/redux-state";
-import {changeSettingsValueAC, incrementAC, setCountAC, setErrorAC, toggleSettingsAC} from "./Redux/counter-reducer";
+import {
+    applySettingsAC,
+    changeSettingsValueAC,
+    incrementAC,
+    setCountAC,
+    setErrorAC,
+    toggleSettingsAC
+} from "./Redux/counter-reducer";
 import {Dispatch} from "redux";
 
 type AppPropsType = {
@@ -23,12 +29,15 @@ export function App({state, dispatch}: AppPropsType) {
     const error = state.counter.error
     const count = state.counter.count
     const isDisabledInc = count === state.counter.maxValue
-    const isDisabledReset = count === lsSettings.startValue
+    const isDisabledReset = count === state.counter.startValue
+    const applyDisabled = !!error
+    const incDisabled = error ? true : isDisabledInc
+    const resDisabled = error ? true : isDisabledReset
 
-    const increment = () => count !== lsSettings.maxValue && dispatch(incrementAC())
-    const reset = () => dispatch(setCountAC(lsSettings.startValue))
+    const increment = () => count !== state.counter.maxValue && dispatch(incrementAC())
+    const reset = () => dispatch(setCountAC(state.counter.startValue))
 
-    const getSettings = (startValue: number, maxValue: number) => {
+    const getSettingsFromInput = (startValue: number, maxValue: number) => {
         dispatch(changeSettingsValueAC(startValue, maxValue))
         if (startValue < 0 || maxValue < 0) {
             dispatch(setErrorAC('values can\'t be negative!'))
@@ -42,7 +51,7 @@ export function App({state, dispatch}: AppPropsType) {
     }
 
     const applySettingsCallback = () => {
-        setLsSettings(state.counter.settingsValue)
+        dispatch(applySettingsAC())
         dispatch(setErrorAC(''))
         dispatch(setCountAC(state.counter.settingsValue.startValue))
         dispatch(toggleSettingsAC())
@@ -52,15 +61,8 @@ export function App({state, dispatch}: AppPropsType) {
         dispatch(toggleSettingsAC())
     }
 
-    const applyDisabled = !!error
-    const incDisabled = error ? true : isDisabledInc
-    const resDisabled = error ? true : isDisabledReset
-    const resetLS = () => localStorage.clear()
-
-
     return (
         <>
-            <button onClick={resetLS}>LS clear</button>
             <div className={s.wrapper}>
                 <div>{localStorage.getItem('state')}</div>
                 {
@@ -68,7 +70,7 @@ export function App({state, dispatch}: AppPropsType) {
                         ? (
                             <div className={s.stand}>
                                 <div className={s.desktop}>
-                                    <Settings getSettings={getSettings} changeValueSettings={state.counter.settingsValue}
+                                    <Settings getSettings={getSettingsFromInput} settingsValue={state.counter.settingsValue}
                                               error={error}/>
                                 </div>
                                 <div className={s.buttons}>

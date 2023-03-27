@@ -3,7 +3,7 @@ import s from './settings.module.css'
 import {StorageType} from "../../hooks/useLocalStorage";
 
 type SettingsType = {
-    changeValueSettings: StorageType
+    settingsValue: StorageType
     getSettings: (startValue: number, maxValue: number) => void
     error: string
 }
@@ -11,11 +11,11 @@ type SettingsType = {
 export const Settings = (props: SettingsType) => {
 
     const dispatchMaxValue = (event: ChangeEvent<HTMLInputElement>) => {
-        props.getSettings(props.changeValueSettings.startValue, Number(event.currentTarget.value))
+        props.getSettings(props.settingsValue.startValue, Number(event.currentTarget.value))
     }
 
     const dispatchStartValue = (event: ChangeEvent<HTMLInputElement>) => {
-        props.getSettings(Number(event.currentTarget.value), props.changeValueSettings.maxValue)
+        props.getSettings(Number(event.currentTarget.value), props.settingsValue.maxValue)
     }
 
     const inputClassName = `${props.error ? s.error : ''}`
@@ -23,11 +23,11 @@ export const Settings = (props: SettingsType) => {
     return (
         <div className={s.settings}>
             <div>maxValue:<input className={inputClassName}
-                                 value={props.changeValueSettings.maxValue}
+                                 value={props.settingsValue.maxValue}
                                  onChange={dispatchMaxValue}
                                  type={'number'}/></div>
             <div>start value:<input className={inputClassName}
-                                    value={props.changeValueSettings.startValue}
+                                    value={props.settingsValue.startValue}
                                     onChange={dispatchStartValue}
                                     type={'number'}/>
             </div>

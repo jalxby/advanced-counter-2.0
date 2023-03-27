@@ -3,6 +3,7 @@ const SET_COUNT = 'SET-COUNT'
 const SET_ERROR = 'SET-ERROR'
 const TOGGLE_SETTINGS_WINDOW = 'TOGGLE-SETTINGS-WINDOW'
 const CHANGE_SETTINGS_VALUE = 'CHANGE-SETTINGS-VALUE'
+const APPLY_SETTINGS = 'APPLY-SETTINGS'
 
 type IncrementActionType =
     IncrementACType
@@ -10,6 +11,7 @@ type IncrementActionType =
     | SetErrorACType
     | ToggleSettingsACType
     | ChangeSettingsValueACType
+    | ApplySettingsACType
 
 type InitStateType = {
     startValue: number
@@ -59,6 +61,9 @@ export const counterReducer = (state: InitStateType = initState, action: Increme
                 },
             }
         }
+        case APPLY_SETTINGS: {
+            return {...state, startValue: state.settingsValue.startValue, maxValue: state.settingsValue.maxValue}
+        }
         default: {
             return state
         }
@@ -107,6 +112,13 @@ export const changeSettingsValueAC = (startValue: number, maxValue: number) => {
             startValue,
             maxValue
         }
+    } as const
+}
+
+type ApplySettingsACType = ReturnType<typeof applySettingsAC>
+export const applySettingsAC = () => {
+    return {
+        type: APPLY_SETTINGS,
     } as const
 }
 
