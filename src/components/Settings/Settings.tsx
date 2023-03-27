@@ -12,7 +12,6 @@ export const Settings = (props: SettingsType) => {
 
     const dispatchMaxValue = (event: ChangeEvent<HTMLInputElement>) => {
         props.getSettings(props.changeValueSettings.startValue, Number(event.currentTarget.value))
-        console.log(props.error)
     }
 
     const dispatchStartValue = (event: ChangeEvent<HTMLInputElement>) => {

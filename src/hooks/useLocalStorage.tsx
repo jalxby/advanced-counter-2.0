@@ -1,4 +1,4 @@
-import {Dispatch, useEffect, useState} from "react";
+import {Dispatch, useState} from "react";
 
 export type StorageType = {
     startValue: number
@@ -6,18 +6,28 @@ export type StorageType = {
 }
 
 function getValue(key: string, initSettings: StorageType) {
-    let existValue = localStorage.getItem(key)
-    if (existValue) {
+    try {
+        let existValue = localStorage.getItem(key)
+        if (existValue === null) {
+            return initSettings
+        }
         return JSON.parse(existValue)
+    } catch (err) {
+        return undefined
     }
-    return initSettings
 }
 
+export const saveState = (state: StorageType) => {
+    try {
+        localStorage.setItem('state', JSON.stringify(state));
+    } catch {
+        console.log('LocalStorage write error!')
+    }
+};
+
 export const useLocalStorage = (initSettings: StorageType): [StorageType, Dispatch<StorageType>] => {
-    const [value, setValue] = useState<StorageType>(getValue('settings', initSettings))
-    useEffect(() => {
-        localStorage.setItem('settings', JSON.stringify(value))
-    }, [value])
+    const [value, setValue] = useState<StorageType>(getValue('state', initSettings))
+    saveState(value)
     return [value, setValue]
 }
 
