@@ -1,4 +1,4 @@
-.settings{
+.settings {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -6,17 +6,18 @@
     padding: 15px;
 }
 
-.settings div{
+.settings div {
     font-weight: bold;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-.settings input{
+
+.settings input {
     border-radius: 3px;
     border: #61dafb;
 }
 
-.error{
+.error {
     background-color: red;
 }

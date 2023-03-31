@@ -1,4 +1,3 @@
-
 const INCREMENT = 'INCREMENT'
 const SET_COUNT = 'SET-COUNT'
 const SET_ERROR = 'SET-ERROR'

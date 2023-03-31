@@ -2,16 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import store from "./Redux/redux-state";
+import store from "./redux/redux-state";
 import {Provider} from "react-redux";
 import {AppContainer} from "./AppContainer";
+
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
 root.render(
     <Provider store={store}>
-    <AppContainer/>
+        <AppContainer/>
     </Provider>
 );
 

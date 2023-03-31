@@ -1,6 +1,7 @@
 import {combineReducers, createStore} from "redux";
 import {counterReducer} from "./counter-reducer";
-import {loadState, saveState} from "../hooks/useLocalStorage";
+import {loadState, saveState} from "./useLocalStorage";
+
 
 const rootReducer = combineReducers({
     counter: counterReducer

@@ -1,4 +1,5 @@
-import {StateType} from "../Redux/redux-state";
+import {StateType} from "./redux-state";
+import {log} from "util";
 
 export function loadState(key: string) {
     try {
@@ -8,7 +9,7 @@ export function loadState(key: string) {
         }
         return JSON.parse(existValue)
     } catch (err) {
-        return undefined
+
     }
 }
 

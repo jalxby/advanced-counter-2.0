@@ -1,37 +1,20 @@
-import React, {ChangeEvent} from 'react';
-import s from './settings.module.css'
+import React from 'react';
+import s from "../../App.module.css";
+import {SettingsValues} from "./SettingsValues";
+import {Button} from "../Button/Button";
+import {SettingsPropsType} from "./SettingsContainer";
 
-type SettingsType = {
-    settingsValue: {
-        startValue: number
-        maxValue: number
-    }
-    getSettings: (startValue: number, maxValue: number) => void
-    error: string
-}
-
-export const Settings = (props: SettingsType) => {
-
-    const dispatchMaxValue = (event: ChangeEvent<HTMLInputElement>) => {
-        props.getSettings(props.settingsValue.startValue, Number(event.currentTarget.value))
-    }
-
-    const dispatchStartValue = (event: ChangeEvent<HTMLInputElement>) => {
-        props.getSettings(Number(event.currentTarget.value), props.settingsValue.maxValue)
-    }
-
-    const inputClassName = `${props.error ? s.error : ''}`
-
+export const Settings = (props: SettingsPropsType) => {
+    const applySettingsHandler = () => props.applySettingsCallback(props.currentStartValue)
     return (
-        <div className={s.settings}>
-            <div>maxValue:<input className={inputClassName}
-                                 value={props.settingsValue.maxValue}
-                                 onChange={dispatchMaxValue}
-                                 type={'number'}/></div>
-            <div>start value:<input className={inputClassName}
-                                    value={props.settingsValue.startValue}
-                                    onChange={dispatchStartValue}
-                                    type={'number'}/>
+        <div className={s.stand}>
+            <div className={s.desktop}>
+                <SettingsValues getSettings={props.getSettingsFromInput} settingsValue={props.settingsValue}
+                                error={props.error}/>
+            </div>
+            <div className={s.buttons}>
+                <Button title={'apply'} callback={applySettingsHandler}
+                        disabled={props.isApplyDisabled}/>
             </div>
         </div>
     );

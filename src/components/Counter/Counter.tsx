@@ -1,16 +1,27 @@
-import React, {FC} from 'react';
-import s from "./counter.module.css"
+import React from 'react';
+import s from "../../App.module.css";
+import {CounterPanel} from "./CounterPanel";
+import {Button} from "../Button/Button";
+import {CounterPropsType} from "./CounterContainer";
 
-type DesktopType = {
-    count: number | string
-    error: boolean
-}
+export const Counter = (props: CounterPropsType) => {
 
-export const Counter: FC<DesktopType> = ({count, error}) => {
-    const errorClassname = error ? s.overCount : s.counter
-    const stringErrorClassname = typeof count === 'string' ? (s.string + ' ' + s.overCount) : s.counter
+    const increment = () => props.count !== props.maxValue && props.increment()
+    const reset = () => props.setCount(props.startValue)
+    const toggleSettingsCallback = () => props.toggleSettings()
+
     return (
-        <span className={`${stringErrorClassname} ${errorClassname}`}>{count}</span>
+        <div className={s.stand}>
+            <div className={s.desktop}>
+                <CounterPanel count={props.counterForm} error={props.isDisabledInc}/>
+            </div>
+            <div className={s.buttons}>
+                <Button title={'inc'} callback={increment} disabled={props.isIncDisabled}/>
+                <Button title={'res'} callback={reset} disabled={props.isResDisabled}/>
+                <Button title={'set'} callback={toggleSettingsCallback} disabled={false}/>
+            </div>
+        </div>
     );
 };
 
+//export default Counter;
