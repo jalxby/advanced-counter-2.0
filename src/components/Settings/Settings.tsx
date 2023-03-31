@@ -1,9 +1,11 @@
 import React, {ChangeEvent} from 'react';
 import s from './settings.module.css'
-import {StorageType} from "../../hooks/useLocalStorage";
 
 type SettingsType = {
-    settingsValue: StorageType
+    settingsValue: {
+        startValue: number
+        maxValue: number
+    }
     getSettings: (startValue: number, maxValue: number) => void
     error: string
 }

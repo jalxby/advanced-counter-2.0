@@ -1,15 +1,10 @@
-import {Dispatch, useState} from "react";
+import {StateType} from "../Redux/redux-state";
 
-export type StorageType = {
-    startValue: number
-    maxValue: number
-}
-
-function getValue(key: string, initSettings: StorageType) {
+export function loadState(key: string) {
     try {
-        let existValue = localStorage.getItem(key)
+        const existValue = localStorage.getItem(key)
         if (existValue === null) {
-            return initSettings
+            return undefined
         }
         return JSON.parse(existValue)
     } catch (err) {
@@ -17,7 +12,7 @@ function getValue(key: string, initSettings: StorageType) {
     }
 }
 
-export const saveState = (state: StorageType) => {
+export const saveState = (state: StateType) => {
     try {
         localStorage.setItem('state', JSON.stringify(state));
     } catch {
@@ -25,11 +20,8 @@ export const saveState = (state: StorageType) => {
     }
 };
 
-export const useLocalStorage = (initSettings: StorageType): [StorageType, Dispatch<StorageType>] => {
-    const [value, setValue] = useState<StorageType>(getValue('state', initSettings))
-    saveState(value)
-    return [value, setValue]
-}
+
+
 
 
 

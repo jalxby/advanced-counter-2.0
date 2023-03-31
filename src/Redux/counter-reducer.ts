@@ -1,3 +1,4 @@
+
 const INCREMENT = 'INCREMENT'
 const SET_COUNT = 'SET-COUNT'
 const SET_ERROR = 'SET-ERROR'
@@ -13,12 +14,12 @@ type IncrementActionType =
     | ChangeSettingsValueACType
     | ApplySettingsACType
 
-type InitStateType = {
+export type CounterType = {
     startValue: number
     maxValue: number
     count: number
     error: string
-    toggleSettings: boolean
+    isToggled: boolean
     settingsValue: {
         startValue: number
         maxValue: number
@@ -30,14 +31,14 @@ const initState = {
     maxValue: 5,
     count: 0,
     error: '',
-    toggleSettings: false,
+    isToggled: false,
     settingsValue: {
         startValue: 0,
         maxValue: 5
     }
-} as InitStateType
+} as CounterType
 
-export const counterReducer = (state: InitStateType = initState, action: IncrementActionType): InitStateType => {
+export const counterReducer = (state = initState, action: IncrementActionType): CounterType => {
     switch (action.type) {
         case INCREMENT: {
             return {...state, count: state.count + 1}
@@ -49,7 +50,7 @@ export const counterReducer = (state: InitStateType = initState, action: Increme
             return {...state, error: action.payload.value}
         }
         case TOGGLE_SETTINGS_WINDOW: {
-            return {...state, toggleSettings: !state.toggleSettings}
+            return {...state, isToggled: !state.isToggled}
         }
         case CHANGE_SETTINGS_VALUE: {
             return {
